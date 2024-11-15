@@ -10,14 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-3xl text-purple-800">Bienvenido a tu gestor de tareas</h1>
-                    @foreach ($tasks as $task)
-                        <p class="mt-4 text-lg text-purple-800">
-                            {{$task->title}}
-                        </p>
-                        <p>
-                            {{$task->description}}
-                        </p>
-                    @endforeach
+                    @livewire('task-component')
                 </div>
             </div>
         </div>
