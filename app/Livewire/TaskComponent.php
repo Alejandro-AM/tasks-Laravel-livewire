@@ -2,9 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Jobs\RemoveAllTasks;
+use App\Mail\SharedTask;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class TaskComponent extends Component
@@ -90,7 +93,7 @@ class TaskComponent extends Component
             $task = Task::create([
                 'title' => $this->title,
                 'description' => $this->description,
-                'user_id' => $this->id,
+                'user_id' => Auth::user()->id,
             ]);
         }
 
@@ -123,6 +126,9 @@ class TaskComponent extends Component
         $user->sharedTasks()->attach($task->id, ['permission' => $this->permission]);
         $this->closeShareModal();
         $this->tasks = $this->getTasks()->sortByDesc('id');
+        $this->clearFields();
+
+        Mail::to($user->email)->queue(new SharedTask($task, Auth::user()));
     }
 
     public function taskUnshared(Task $task)
@@ -130,5 +136,11 @@ class TaskComponent extends Component
         $user = User::find(Auth::user()->id);
         $user->sharedTasks()->detach($task->id);
         $this->tasks = $this->getTasks()->sortByDesc('id');
+    }
+
+    public function removeAllTasks()
+    {
+        $user = User::find(Auth::user()->id);
+        RemoveAllTasks::dispatch($user);
     }
 }
