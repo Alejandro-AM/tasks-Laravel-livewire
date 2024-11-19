@@ -143,4 +143,11 @@ class TaskComponent extends Component
         $user = User::find(Auth::user()->id);
         RemoveAllTasks::dispatch($user);
     }
+
+    public function recoverAllTasks()
+    {
+        $user = User::find(Auth::user()->id);
+        $user->tasks()->restore();
+        $this->renderAllTasks();
+    }
 }

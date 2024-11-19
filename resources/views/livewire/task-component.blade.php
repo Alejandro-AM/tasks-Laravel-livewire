@@ -2,6 +2,7 @@
 <div class="container" wire:poll="renderAllTasks">
     <button wire:click="openCreateModal" class="bg-purple-800 text-white px-4 py-2 my-6 rounded-md hover:bg-purple-700">Nuevo</button>
     <button wire:click="removeAllTasks" wire:confirm="Estas seguro que quieres eliminar todas la tareas?" class="bg-red-800 text-white px-4 py-2 my-6 rounded-md hover:bg-red-700">Borrar todas las tareas</button>
+    <button wire:click="recoverAllTasks" wire:confirm="Estas seguro que quieres recuperar todas la tareas?" class="bg-green-800 text-white px-4 py-2 my-6 rounded-md hover:bg-green-700">Recuperar todas las tareas</button>
 	<table class="text-center w-full">
 		<thead class="bg-purple-800 flex text-white w-full">
 			<tr class="flex w-full mb-4">
